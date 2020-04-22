@@ -16,13 +16,14 @@ export default function Navigation() {
   return (
     <Navbar bg="light" expand="lg">
       <Navbar.Brand as={NavLink} to="/">
-        YOUR PROJECT NAME
+        BEST DEAL
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav style={{ width: "100%" }} fill>
           <NavbarItem path="/" linkText="Home" />
-          <NavbarItem path="/other" linkText="Other" />
+          <NavbarItem path="/products" linkText="View Products" />
+          <NavbarItem path="/myDeals" linkText="View Your Deals" />
           {loginLogoutControls}
         </Nav>
       </Navbar.Collapse>
