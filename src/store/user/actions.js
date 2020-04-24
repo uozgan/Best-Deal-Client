@@ -7,6 +7,7 @@ import {
   showMessageWithTimeout,
   setMessage,
 } from "../appState/actions";
+import { selectAllProducts } from "../products/selectors";
 
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const TOKEN_STILL_VALID = "TOKEN_STILL_VALID";
@@ -128,3 +129,61 @@ export const fetchCartProductsByCartId = (cartId) => {
     }
   };
 };
+
+export const ADD_PRODUCT_TO_CART = "ADD_PRODUCT_TO_CART";
+// export const REMOVE_CAR_FROM_CART = "REMOVE_CAR_FROM_CART";
+// export const CLEAR_CART = "CLEAR_CART";
+
+export const addToCart = (cartProduct) => {
+  return (dispatch) => {
+    console.log("Prodcut added!");
+    dispatch({
+      type: ADD_PRODUCT_TO_CART,
+      payload: cartProduct,
+    });
+  };
+};
+
+// export const removeCarFromCart = (id) => {
+//   return (dispatch) => {
+//     dispatch({
+//       type: REMOVE_CAR_FROM_CART,
+//       payload: id,
+//     });
+//   };
+// };
+
+export const addProductToCart = (id) => {
+  return async (dispatch, getState) => {
+    dispatch(appLoading());
+    const { cart, token } = selectUser(getState());
+
+    console.log("Cartzz", cart);
+
+    const response = await axios.post(
+      `${apiUrl}/products/${id}`,
+      {
+        productId: id,
+        cartId: cart.id,
+        quantity: 1,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    console.log("Response Cart add", response.data);
+    console.log("data.cartProduct", response.data.cartProduct);
+
+    dispatch(addToCart(response.data.cartProduct));
+    dispatch(appDoneLoading());
+  };
+};
+
+// export const emptyCart = () => {
+//   return {
+//     type: CLEAR_CART
+//   }
+// }
