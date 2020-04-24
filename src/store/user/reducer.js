@@ -1,9 +1,15 @@
-import { LOG_OUT, LOGIN_SUCCESS, TOKEN_STILL_VALID } from "./actions";
+import {
+  LOG_OUT,
+  LOGIN_SUCCESS,
+  TOKEN_STILL_VALID,
+  ADD_PRODUCT_TO_CART,
+} from "./actions";
 
 const initialState = {
   token: localStorage.getItem("token"),
   name: null,
-  email: null
+  email: null,
+  cart: null,
 };
 
 export default (state = initialState, action) => {
@@ -19,6 +25,14 @@ export default (state = initialState, action) => {
     case TOKEN_STILL_VALID:
       return { ...state, ...action.payload };
 
+    case ADD_PRODUCT_TO_CART:
+      return {
+        ...state,
+        cart: {
+          ...state.cart,
+          Cart_Products: [...state.cart.Cart_Products, action.payload],
+        },
+      };
     default:
       return state;
   }
