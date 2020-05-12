@@ -4,6 +4,7 @@ import Loading from "../../components/Loading";
 import { Container } from "react-bootstrap";
 import { selectCart } from "../../store/user/selectors";
 import { fetchCartProductsByCartId } from "../../store/user/actions";
+import CartProduct from "../../components/CartProduct";
 
 export default function MyDeals() {
   const dispatch = useDispatch();
@@ -21,6 +22,33 @@ export default function MyDeals() {
   }
 
   console.log("Cart", cart);
+  console.log("Cart Products", cart.Cart_Products);
 
-  return <Container>My Deals Id: {cart.id}</Container>;
+  const cartProducts = cart.Cart_Products.map((product) => {
+    return product.productId;
+  });
+
+  console.log(cartProducts);
+
+  const uniqueProducts = [...new Set(cartProducts)];
+
+  //console.log("Unique", uniqueProducts);
+
+  const productAndQuantity = uniqueProducts.map((value) => [
+    value,
+    cartProducts.filter((num) => num === value).length,
+  ]);
+
+  console.log("productAndQuantity", productAndQuantity);
+
+  return (
+    <Container>
+      My Deals Id: {cart.id}
+      {productAndQuantity.map((product, i) => {
+        return (
+          <CartProduct key={i} productId={product[0]} quantity={product[1]} />
+        );
+      })}
+    </Container>
+  );
 }
