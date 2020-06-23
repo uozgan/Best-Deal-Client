@@ -7,10 +7,14 @@ import ProductCard from "../../components/ProductCard";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Dropdown from "react-bootstrap/Dropdown";
+import CartProduct from "../../components/CartProduct";
+import { selectCart } from "../../store/user/selectors";
+import { fetchCartProductsByCartId } from "../../store/user/actions";
 
 export default function ProductList() {
   const dispatch = useDispatch();
   const products = useSelector(selectAllProducts);
+  const cart = useSelector(selectCart);
 
   console.log("Products", products);
 
@@ -20,6 +24,31 @@ export default function ProductList() {
     }
   }, []);
 
+  const cartId = cart ? cart.id : null;
+
+  useEffect(() => {
+    dispatch(fetchCartProductsByCartId(cartId));
+  }, []);
+
+  if (!cart) {
+    return <Loading />;
+  }
+
+  const cartProducts = cart.Cart_Products.map((product) => {
+    return product.productId;
+  });
+
+  console.log(cartProducts);
+
+  const uniqueProducts = [...new Set(cartProducts)];
+
+  //console.log("Unique", uniqueProducts);
+
+  const productAndQuantity = uniqueProducts.map((value) => [
+    value,
+    cartProducts.filter((num) => num === value).length,
+  ]);
+
   if (!products) {
     return <Loading />;
   }
@@ -28,7 +57,13 @@ export default function ProductList() {
     <>
       <h1>All Products</h1>
 
-      <Container className="m-auto row d-flex">
+      <Container
+        style={{
+          width: "80%",
+          float: "left",
+        }}
+        className="m-auto row d-flex"
+      >
         {products.map((product, i) => {
           return (
             <ProductCard
@@ -44,16 +79,22 @@ export default function ProductList() {
       </Container>
       <Container
         style={{
-          width: "100px",
+          width: "150px",
           height: "400px",
           backgroundColor: "red",
           //position: "absolute",
           float: "right",
+          marginRight: "30px",
           zIndex: 2,
         }}
       >
         {" "}
-        Your Grocery List
+        Your Grocery List: My Deals Id: {cart.id}
+        {productAndQuantity.map((product, i) => {
+          return (
+            <CartProduct key={i} productId={product[0]} quantity={product[1]} />
+          );
+        })}
       </Container>
     </>
   );
