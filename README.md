@@ -13,13 +13,13 @@ This is a simple react/redux/jwt based web app
 1. Clone the app
 
 ```
-git clone git@github.com:YOUR_GITHUB_NAME/Best-Deal.git
+git clone git@github.com:YOUR_GITHUB_NAME/Best-Deal-Client.git
 ```
 
 2. cd into your project
 
 ```
-cd YOUR_PROJECT_NAME
+cd Best-Deal-Client
 ```
 
 3. install dependencies
