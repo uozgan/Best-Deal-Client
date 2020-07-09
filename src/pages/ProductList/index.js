@@ -38,7 +38,12 @@ export default function ProductList() {
     return product.productId;
   });
 
-  console.log(cartProducts);
+  const cartProductName = products.map((product) => {
+    return product.name;
+  });
+
+  //console.log(cartProducts);
+  //console.log("ZZZZZZZZZZ", cartProductName);
 
   const uniqueProducts = [...new Set(cartProducts)];
 
@@ -48,6 +53,9 @@ export default function ProductList() {
     value,
     cartProducts.filter((num) => num === value).length,
   ]);
+
+  console.log("productAndQuantity", productAndQuantity);
+  console.log("productAndQuantity cevap 2", productAndQuantity[0][0]);
 
   if (!products) {
     return <Loading />;
@@ -90,10 +98,18 @@ export default function ProductList() {
       >
         {" "}
         Your Grocery List: My Deals Id: {cart.id}
-        {productAndQuantity.map((product, i) => {
-          return (
-            <CartProduct key={i} productId={product[0]} quantity={product[1]} />
-          );
+        {productAndQuantity.map((product, index) => {
+          for (let i = 0; i < products.length; i++) {
+            if (product[0] == products[i].id) {
+              return (
+                <CartProduct
+                  key={index}
+                  productId={products[i].name}
+                  quantity={product[1]}
+                />
+              );
+            }
+          }
         })}
       </Container>
     </>
