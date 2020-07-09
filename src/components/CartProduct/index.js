@@ -10,7 +10,7 @@ const CartProduct = (props) => {
           <Card.Title
             style={{ width: "100px", fontSize: "10px" }}
             className="align-self-end"
-          >{`Product Id: ${props.productId} Quantity: ${props.quantity}`}</Card.Title>
+          >{`Product: ${props.productId} Quantity: ${props.quantity}`}</Card.Title>
         </Card.Body>
       </Card>
     </div>
