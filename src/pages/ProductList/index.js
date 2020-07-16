@@ -35,7 +35,7 @@ export default function ProductList() {
   }
 
   const cartProducts = cart.Cart_Products.map((product) => {
-    return product.productId;
+    return product.productId ? product.productId : null;
   });
 
   const cartProductName = products.map((product) => {
@@ -55,7 +55,6 @@ export default function ProductList() {
   ]);
 
   console.log("productAndQuantity", productAndQuantity);
-  console.log("productAndQuantity cevap 2", productAndQuantity[0][0]);
 
   if (!products) {
     return <Loading />;
