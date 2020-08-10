@@ -6,7 +6,10 @@ import { Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { selectToken } from "../../store/user/selectors";
 import Container from "react-bootstrap/Container";
-import { addProductToCart } from "../../store/user/actions";
+import {
+  addProductToCart,
+  removeProductFromCart,
+} from "../../store/user/actions";
 
 const ProductCard = (props) => {
   const dispatch = useDispatch();
@@ -21,7 +24,7 @@ const ProductCard = (props) => {
 
   function removeFromCart(id) {
     console.log("Clicked", id);
-    //dispatch(removeCarFromCart(id));
+    dispatch(removeProductFromCart(id));
   }
 
   return (

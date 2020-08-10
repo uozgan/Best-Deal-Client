@@ -3,6 +3,7 @@ import {
   LOGIN_SUCCESS,
   TOKEN_STILL_VALID,
   ADD_PRODUCT_TO_CART,
+  REMOVE_PRODUCT_FROM_CART,
 } from "./actions";
 
 const initialState = {
@@ -33,6 +34,21 @@ export default (state = initialState, action) => {
           Cart_Products: [...state.cart.Cart_Products, action.payload],
         },
       };
+
+    case REMOVE_PRODUCT_FROM_CART:
+      const productToDelete = action.payload;
+      const newCart_Products = state.cart.Cart_Products.filter(
+        (product) => product.productId !== productToDelete
+      );
+
+      return {
+        ...state,
+        cart: {
+          ...state.cart,
+          Cart_Products: newCart_Products,
+        },
+      };
+
     default:
       return state;
   }
