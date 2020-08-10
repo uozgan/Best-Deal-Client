@@ -31,7 +31,11 @@ export default function ProductList() {
   }, []);
 
   if (!cart) {
-    return <Loading />;
+    return (
+      <div>
+        <h3>Please login to see the products</h3>
+      </div>
+    );
   }
 
   const cartProducts = cart.Cart_Products.map((product) => {
